@@ -1,0 +1,41 @@
+[project]
+name = "object-counter"
+version = "0.1.0"
+description = "Real-time object counting: YOLO detection, a SORT tracker written from scratch (Kalman filter + Hungarian matching), directional line-crossing counts, zone dwell time and heatmaps."
+readme = "README.md"
+license = { text = "AGPL-3.0-or-later" }
+authors = [{ name = "Abbishekk DGS" }]
+requires-python = ">=3.11"
+dependencies = ["ultralytics>=8.3", "torch>=2.3", "scipy>=1.11", "numpy>=1.26", "opencv-python-headless>=4.9"]
+
+[project.urls]
+Homepage = "https://abbishekkdgs.tech"
+Repository = "https://github.com/Abbishekk-DGS/object-counter"
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[project.scripts]
+object-counter = "object_counter.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/object_counter"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["E501"]
+
+[tool.uv.sources]
+torch = [{ index = "pytorch-cpu", marker = "sys_platform == 'linux'" }]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
