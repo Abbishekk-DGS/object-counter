@@ -7,6 +7,36 @@
 <!-- author-banner -->
 > **Project 06 of 20** in my AI build series, designed and built by **[Abbishekk DGS](https://abbishekkdgs.tech)**. [See all projects →](https://github.com/Abbishekk-DGS)
 
+<!-- overview:start -->
+## Overview
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/overview-dark.svg">
+  <img alt="object-counter overview: how it works and its output. Key numbers: ~23 fps end to end, 8 GB Mac; 596 frames in the test video; 12 unique tracks; 3 line events: 2 in, 1 out. Stack: Python · Ultralytics YOLO11 · Kalman filter · Hungarian matching · OpenCV." src="docs/overview-light.svg" width="100%">
+</picture>
+
+## Interface
+
+It is one terminal command, with an optional live preview window.
+
+```
+object-counter <video | RTSP URL | webcam index> [options]
+```
+
+| Option | What it does | Default |
+|---|---|---|
+| `--classes` | COCO class names to count, comma separated | `person` |
+| `--line` | Counting line as `x1,y1,x2,y2` frame fractions | `0,0.5,1,0.5` |
+| `--zone` | Polygon for dwell time, as frame fractions | |
+| `--heatmap` | Adds the motion heatmap | off |
+| `--model` | Any Ultralytics detection model | `yolo11n.pt` |
+| `--conf` | Detection confidence | 0.35 |
+| `--show` | Opens a live preview; press `q` to stop | off |
+| `--out` | Output folder | `outputs` |
+
+The terminal prints fps and running totals every 50 frames. Each run writes `<name>_counted.mp4`, `<name>_events.csv` (frame, line, track, class, direction) and `<name>_summary.json`, and prints the summary at the end.
+<!-- overview:end -->
+
 ## What you get
 
 - **Directional line counting**: IN / OUT per class. Each object is counted at most once per direction, so people lingering on the line don't inflate numbers
