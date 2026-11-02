@@ -83,7 +83,7 @@ def main(argv: list[str] | None = None) -> int:
         action="version",
         version=f"%(prog)s {__version__} · by Abbishekk DGS · abbishekkdgs.tech",
     )
-    parser.add_argument("source", help="video file, image folder, RTSP URL, or webcam index")
+    parser.add_argument("source", help="video file, RTSP URL, or webcam index")
     parser.add_argument("--model", default="yolo11n.pt", help="any Ultralytics detection model")
     parser.add_argument("--classes", default="person", help="comma-separated COCO class names")
     parser.add_argument("--conf", type=float, default=0.35)
@@ -107,7 +107,7 @@ def main(argv: list[str] | None = None) -> int:
     cap = cv2.VideoCapture(source)
     fps = cap.get(cv2.CAP_PROP_FPS) or 30.0
     w, h = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-    if not w:
+    if not cap.isOpened() or w <= 0:
         raise SystemExit(f"could not open {args.source}")
 
     out_dir = Path(args.out)
